@@ -1,6 +1,6 @@
 using System;
 using Galaga.Common.Services.Dialog;
-using Galaga.MainMenu.Commands;
+using Galaga.Common.Utils.Data;
 using Galaga.MainMenu.Services.TopScore;
 using Zenject;
 
@@ -11,6 +11,8 @@ namespace Galaga.MainMenu.UI.Dialogs.TopScore
     {
         [Inject] public SignalBus SignalBus { get; set; }
         [Inject] public ITopScoreService TopScoreService { get; set; }
+        [Inject] public DialogService DialogService { get; set; }
+        public ActiveListData<TopScoreItemData> Score => TopScoreService.Score;
         
         public void Initialize()
         {
@@ -22,7 +24,7 @@ namespace Galaga.MainMenu.UI.Dialogs.TopScore
 
         public void Close()
         {
-            SignalBus.Fire<CloseTopScoreSignal>();
+            DialogService.CloseDialog<TopScoreDialogViewModel>();
         }
 
         

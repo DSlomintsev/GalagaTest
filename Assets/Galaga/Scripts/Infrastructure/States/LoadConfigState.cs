@@ -11,12 +11,10 @@ namespace Galaga.Infrastructure.States
         [Inject] public SceneLoader SceneLoader { get; set; }
         [Inject] public ConfigProviderService ConfigProviderService { get; set; }
 
-        private const string MainMenuSceneName = "MainMenu";
-
         public void Enter()
         {
             //_configProviderService.Load(HandleLoadConfigs);
-            SceneLoader.Load(MainMenuSceneName, onLoaded: HandleSceneLoaded);
+            SceneLoader.Load(SceneNames.MainMenu, onLoaded: HandleSceneLoaded);
         }
 
         public void Exit()

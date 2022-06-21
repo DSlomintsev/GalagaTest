@@ -8,8 +8,11 @@ namespace Galaga.Common.Services.Dialog
     public class BaseDialogView : MonoBehaviour
     {
         [SerializeField] private RectTransform container;
+        [SerializeField] private bool isPause;
         [SerializeField] private UIAnim[] showAnims;
         [SerializeField] private UIAnim[] hideAnims;
+
+        public bool IsPause => isPause;
 
         private Vector2 _defaultPos;
         private Vector2 _hiddenPos;

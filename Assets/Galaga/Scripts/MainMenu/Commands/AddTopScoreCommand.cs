@@ -17,7 +17,7 @@ namespace Galaga.MainMenu.Commands
 
     public class AddTopScoreCommand
     {
-        [Inject] public TopScoreService TopScoreService { get; set; }
+        [Inject] public ITopScoreService TopScoreService { get; set; }
 
         public void Execute(AddTopScoreSignal signal)
         {

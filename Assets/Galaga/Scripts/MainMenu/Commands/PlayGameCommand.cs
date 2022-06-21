@@ -19,7 +19,7 @@ namespace Galaga.MainMenu.Commands
         public void Execute(PlayGameSignal signal)
         {
             LoadingSceneAnim.Show();
-            SceneLoader.Load("Main", onLoaded: HandleSceneLoaded);
+            SceneLoader.Load(SceneNames.Main, onLoaded: HandleSceneLoaded);
         }
 
         private void HandleSceneLoaded()

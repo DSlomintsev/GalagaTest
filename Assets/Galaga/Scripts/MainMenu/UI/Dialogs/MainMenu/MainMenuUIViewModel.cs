@@ -1,13 +1,15 @@
 using System;
 using Galaga.Common.Services.Dialog;
 using Galaga.MainMenu.Commands;
+using Galaga.MainMenu.UI.Dialogs.TopScore;
 using Zenject;
 
 namespace Galaga.MainMenu.UI.Dialogs.MainMenu
 {
     public class MainMenuUIViewModel:BaseDialogViewModel, IInitializable, IDisposable
     {
-        [Inject] public SignalBus SignalBus;
+        [Inject] public SignalBus SignalBus { get; set; }
+        [Inject] public DialogService DialogService { get; set; }
 
         public void Initialize()
         {
@@ -24,7 +26,7 @@ namespace Galaga.MainMenu.UI.Dialogs.MainMenu
         
         public void OnOpenTopScore()
         {
-            SignalBus.Fire<OpenTopScoreSignal>();
+            DialogService.OpenDialog<TopScoreDialogViewModel>();
         }
         
         public void OnQuitGame()

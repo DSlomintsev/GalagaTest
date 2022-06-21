@@ -14,7 +14,7 @@ namespace Galaga.Game.Services.Input.Handlers
         public Vector2 MovementInput { get; private set; }
 
         public ActiveData<bool> IsFire = new();
-        public event Action Escaoe;
+        public event Action Escape;
 
         protected override void OnStart()
         {
@@ -53,7 +53,7 @@ namespace Galaga.Game.Services.Input.Handlers
 
         private void OnEscape(InputAction.CallbackContext obj)
         {
-            Escaoe.Call();
+            Escape.Call();
         }
 
         private void OnMoveUpdate(InputAction.CallbackContext obj)

@@ -54,22 +54,26 @@ namespace Galaga.Infrastructure
 
         private void InstallSignals()
         {
-            Container.DeclareSignal<OpenTopScoreSignal>();
-            Container.DeclareSignal<CloseTopScoreSignal>();
             Container.DeclareSignal<AddTopScoreSignal>();
             Container.DeclareSignal<RemoveTopScoreSignal>();
             Container.DeclareSignal<PlayGameSignal>();
             Container.DeclareSignal<QuitGameSignal>();
+            Container.DeclareSignal<ContinueGameSignal>();
+            Container.DeclareSignal<PauseGameSignal>();
+            
+            Container.DeclareSignal<GoToMainMenuSignal>();
         }
         
         private void InstallCommands()
         {
-            Container.BindSignal<OpenTopScoreSignal>().ToMethod<OpenTopScoreCommand>(handler => handler.Execute).FromNew();
-            Container.BindSignal<CloseTopScoreSignal>().ToMethod<CloseTopScoreCommand>(handler => handler.Execute).FromNew();
             Container.BindSignal<AddTopScoreSignal>().ToMethod<AddTopScoreCommand>(handler => handler.Execute).FromNew();
             Container.BindSignal<RemoveTopScoreSignal>().ToMethod<RemoveTopScoreCommand>(handler => handler.Execute).FromNew();
             Container.BindSignal<PlayGameSignal>().ToMethod<PlayGameCommand>(handler => handler.Execute).FromNew();
             Container.BindSignal<QuitGameSignal>().ToMethod<QuitGameCommand>(handler => handler.Execute).FromNew();
+            Container.BindSignal<ContinueGameSignal>().ToMethod<ContinueGameCommand>(handler => handler.Execute).FromNew();
+            Container.BindSignal<PauseGameSignal>().ToMethod<PauseGameCommand>(handler => handler.Execute).FromNew();
+            
+            Container.BindSignal<GoToMainMenuSignal>().ToMethod<GoToMainMenuCommand>(handler => handler.Execute).FromNew();
         }
 
         private void InstallServices()
@@ -77,7 +81,8 @@ namespace Galaga.Infrastructure
             Container.Bind<ConfigProviderService>().AsSingle();
             Container.BindInterfacesAndSelfTo<SoundPlayerService>().AsSingle();
             Container.BindInterfacesAndSelfTo<DialogService>().AsSingle();
-            Container.Bind<ITopScoreService>().To<TopScoreService>().AsSingle();
+            
+            Container.BindInterfacesAndSelfTo<TopScoreService>().AsSingle();
         }
 
         private void InstallModels()

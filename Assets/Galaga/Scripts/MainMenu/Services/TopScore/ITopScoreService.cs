@@ -1,4 +1,5 @@
-using System.Collections.Generic;
+using Galaga.Common.Utils.Data;
+
 
 namespace Galaga.MainMenu.Services.TopScore
 {
@@ -6,6 +7,8 @@ namespace Galaga.MainMenu.Services.TopScore
     {
         public void AddScoreItem(string name, float score);
         public void RemoveScoreItem(string name);
-        public List<TopScoreItemData> Scores { get; }
+        public void SaveScore();
+        public void LoadScore();
+        public ActiveListData<TopScoreItemData> Score { get; }
     }
 }

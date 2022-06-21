@@ -1,25 +1,29 @@
+using System;
+using Galaga.Common.Utils;
 using Galaga.Game.Model;
 using UnityEngine.InputSystem;
 using Zenject;
 
 namespace Galaga.Game.Services.Input.Handlers
 {
-    public class UIInputHandler:InputHandlerBase
+    public class UIInputHandler : InputHandlerBase
     {
         [Inject] public GameModel GameModel { get; set; }
+        public event Action Escape;
+
         protected override void OnStart()
         {
-            //Input.actions["UI"].performed += OnUI;
+            Input.actions["Escape"].performed += OnEscape;
         }
-        
+
         protected override void OnStop()
         {
-            //Input.actions["UI"].performed -= OnUI;
+            Input.actions["Escape"].performed -= OnEscape;
         }
-        
-        /*private void OnUI(InputAction.CallbackContext obj)
+
+        private void OnEscape(InputAction.CallbackContext obj)
         {
-            GameModel.IsUI.Value = !GameModel.IsUI.Value;
-        }*/
+            Escape.Call();
+        }
     }
 }

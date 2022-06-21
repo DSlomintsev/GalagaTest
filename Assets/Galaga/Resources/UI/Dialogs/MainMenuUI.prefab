@@ -768,6 +768,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   container: {fileID: 0}
+  isPause: 1
   showAnims:
   - {fileID: 75908418896192484}
   hideAnims:
@@ -790,7 +791,7 @@ MonoBehaviour:
   item: {fileID: 429126127566666327}
   duration: 1
   ease: 30
-  startPos: 1
+  startPos: 3
   endPos: 0
 --- !u!114 &6075564599905859870
 MonoBehaviour:
@@ -805,10 +806,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   item: {fileID: 429126127566666327}
-  duration: 0.1
+  duration: 0.5
   ease: 0
   startPos: 0
-  endPos: 1
+  endPos: 4
 --- !u!1 &429126127595407592
 GameObject:
   m_ObjectHideFlags: 0

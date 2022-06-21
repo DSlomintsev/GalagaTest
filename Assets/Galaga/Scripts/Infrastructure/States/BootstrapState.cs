@@ -10,12 +10,10 @@ namespace Galaga.Infrastructure.States
         [Inject] public SceneLoader SceneLoader { get; set; }
         [Inject] public LoadingSceneAnim LoadingSceneAnim { get; set; }
 
-        private const string BootSceneName = "Boot";
-
         public void Enter()
         {
             LoadingSceneAnim.Show();
-            SceneLoader.Load(BootSceneName, onLoaded: HandleSceneLoaded);
+            SceneLoader.Load(SceneNames.MainMenu, onLoaded: HandleSceneLoaded);
         }
 
         public void Exit()

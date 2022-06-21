@@ -33,10 +33,17 @@ public class OutScreenAnim : UIAnim
 
     private Vector2 GetPos(OutScreenAnimPosType posType)
     {
+        var anchoredPos = Item.anchoredPosition;
+        var canvasWidth = CanvasRectTransform.rect.width;
+        var canvasHeight = CanvasRectTransform.rect.height;
+        
         return posType switch
         {
-            OutScreenAnimPosType.IN => Item.anchoredPosition,
-            OutScreenAnimPosType.OUT => Item.anchoredPosition + new Vector2(CanvasRectTransform.rect.width, 0),
+            OutScreenAnimPosType.IN => anchoredPos,
+            OutScreenAnimPosType.OUT_LEFT => anchoredPos - new Vector2(canvasWidth, 0),
+            OutScreenAnimPosType.OUT_RIGHT => anchoredPos + new Vector2(canvasWidth, 0),
+            OutScreenAnimPosType.OUT_TOP => anchoredPos + new Vector2(0, canvasHeight),
+            OutScreenAnimPosType.OUT_BOT => anchoredPos - new Vector2(0,canvasHeight),
         };
     }
 
@@ -71,5 +78,8 @@ public class OutScreenAnim : UIAnim
 public enum OutScreenAnimPosType
 {
     IN,
-    OUT
+    OUT_LEFT,
+    OUT_RIGHT,
+    OUT_TOP,
+    OUT_BOT,
 }

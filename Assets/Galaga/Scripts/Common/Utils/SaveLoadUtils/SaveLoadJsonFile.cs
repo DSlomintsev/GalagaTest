@@ -9,7 +9,7 @@ namespace Galaga.Common.Utils.SaveLoadUtils
     {
         public static async UniTask<T> LoadAsync<T>(string path)
         {
-            using var streamReader = new StreamReader(Path.Combine(Application.dataPath, path+".json"));
+            using var streamReader = new StreamReader(Path.Combine(Application.dataPath, $"{path}{FileFormats.JsonFormat}"));
             var str = await streamReader.ReadToEndAsync();
             var item = JsonConvert.DeserializeObject<T>(str);
             streamReader.Close();
@@ -17,10 +17,10 @@ namespace Galaga.Common.Utils.SaveLoadUtils
             return item;
         }
         
-        public static async UniTask SaveAsync(string path, object buildings)
+        public static async UniTask SaveAsync(string path, object data)
         {
-            var json = JsonConvert.SerializeObject(buildings, Formatting.Indented);
-            await using var streamWriter = new StreamWriter(Path.Combine(Application.dataPath, path + ".json"));
+            var json = JsonConvert.SerializeObject(data, Formatting.Indented);
+            await using var streamWriter = new StreamWriter(Path.Combine(Application.dataPath, $"{path}{FileFormats.JsonFormat}"));
             await streamWriter.WriteLineAsync(json);
             streamWriter.Close();
             await streamWriter.DisposeAsync();
