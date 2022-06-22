@@ -20,7 +20,7 @@ namespace Galaga.MainMenu.Commands
 
         public void Execute(StartLevelSignal signal)
         {
-            LevelService.PlayLevel(signal.LevelId);
+            LevelService.PlayLevel();
         }
     }
 }

@@ -1,12 +1,20 @@
-using Galaga.Game.Actors.Units.Parts;
 using Galaga.Game.Actors.Weapons;
 using Galaga.Game.Services.Input.Handlers;
+using Game.Services;
+using UnityEngine;
+using Zenject;
 
 
 namespace Galaga.Game.Actors.Units.AttackBehaviors
 {
     public class AttackByPlayerInput:IAttack
     {
+        [Inject] public TickService TickService { get; set; }
+        private Camera _camera;
+        public Camera Camera
+        {
+            set => _camera = value;
+        }
         private PlayerInputHandler _playerInputHandler;
         public PlayerInputHandler PlayerInputHandler
         {
@@ -27,10 +35,7 @@ namespace Galaga.Game.Actors.Units.AttackBehaviors
         }
 
         private Weapon _weapon;
-        void IAttack.DeInit()
-        {
-            throw new System.NotImplementedException();
-        }
+        
 
         public Weapon Weapon
         {
@@ -44,12 +49,27 @@ namespace Galaga.Game.Actors.Units.AttackBehaviors
 
         public void Init()
         {
+            TickService.AddTickAction(TickAction);
         }
-
-        void IUnitComponent.DeInit()
+        
+        public void DeInit()
         {
             PlayerInputHandler = null;
             _weapon.IsFirePressed.Value = false;
+            TickService.RemoveTickAction(TickAction);
+        }
+
+        private void TickAction()
+        {
+            var target = _camera.ScreenToWorldPoint(_playerInputHandler.LookInput);
+            var sourcePos=_weapon.PositionContainer.Pos;
+            
+            var dir = new Vector2(target.x, target.y) - sourcePos;
+            
+            var angle = Vector3.Angle(Vector3.right, dir);
+            if(target.y < sourcePos.y) angle *= -1;
+
+            _weapon.Rotation =  Quaternion.AngleAxis(angle, Vector3.forward);
         }
     }
 }

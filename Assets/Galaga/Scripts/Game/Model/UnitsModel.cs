@@ -41,6 +41,23 @@ namespace Galaga.Game.Model
             return result;
         }
         
+        public static string GetTeamIdByUnitId(this UnitsModel model, string unitId)
+        {
+            string result = "";
+
+            foreach (var team in model.Teams)
+            {
+                var unit = team.Units.Find(x => x.Id == unitId);
+                if (unit != null)
+                {
+                    result = team.Id;
+                    break;
+                }
+            }
+
+            return result;
+        }
+        
         public static void RemoveUnit(this UnitsModel model, string unitId)
         {
             foreach (var team in model.Teams)

@@ -1,5 +1,5 @@
-using Unity.Mathematics;
 using UnityEngine;
+
 
 namespace Galaga.Game.Actors.Weapons.Components
 {
@@ -16,10 +16,7 @@ namespace Galaga.Game.Actors.Weapons.Components
 
         public Quaternion GetDir()
         {
-            var rotation = Transform.eulerAngles;
-            Debug.Log(rotation);
-            rotation = new Vector3(0, 1);
-            return quaternion.Euler(rotation);
+            return Transform.rotation;
         }
     }
 }

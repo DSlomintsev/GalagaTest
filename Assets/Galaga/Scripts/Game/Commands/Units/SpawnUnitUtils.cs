@@ -32,12 +32,20 @@ namespace Galaga.Game.Commands
         {
             var attackComponent = new AttackByPlayerInput();
             attackComponent.PlayerInputHandler = inputService.PlayerInputHandler;
+            attackComponent.Camera = Camera.main;
             return attackComponent;
         }
 
-        public static AttackForward AddAttackForward(Transform transform)
+        public static AttackForward AddAttackForward()
         {
             var attackComponent = new AttackForward();
+            return attackComponent;
+        }
+        
+        public static AttackTarget AddAttackTarget(Transform targetTransform)
+        {
+            var attackComponent = new AttackTarget();
+            attackComponent.Target = targetTransform;  
             return attackComponent;
         }
     }

@@ -69,6 +69,7 @@ namespace Galaga.Infrastructure
             Container.DeclareSignal<ShotSignal>();
             Container.DeclareSignal<StartLevelSignal>();
             Container.DeclareSignal<StopLevelSignal>();
+            Container.DeclareSignal<LevelFinishedSignal>();
         }
         
         private void InstallCommands()
@@ -89,6 +90,7 @@ namespace Galaga.Infrastructure
             
             Container.BindSignal<StartLevelSignal>().ToMethod<StartLevelCommand>(handler => handler.Execute).FromNew();
             Container.BindSignal<StopLevelSignal>().ToMethod<StopLevelCommand>(handler => handler.Execute).FromNew();
+            Container.BindSignal<LevelFinishedSignal>().ToMethod<LevelFinishedCommand>(handler => handler.Execute).FromNew();
         }
 
         private void InstallServices()

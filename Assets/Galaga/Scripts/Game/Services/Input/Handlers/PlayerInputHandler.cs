@@ -12,6 +12,7 @@ namespace Galaga.Game.Services.Input.Handlers
     {
         [Inject] public GameModel GameModel { get; set; }
         public Vector2 MovementInput { get; private set; }
+        public Vector2 LookInput { get; private set; }
 
         public ActiveData<bool> IsFire = new();
         public event Action Escape;
@@ -21,6 +22,8 @@ namespace Galaga.Game.Services.Input.Handlers
             Input.actions["Move"].performed += OnMoveUpdate;
             Input.actions["Move"].canceled += OnMoveStop;
             
+            Input.actions["Look"].performed += OnLookUpdate;
+
             Input.actions["Fire"].performed += OnStartFire;
             Input.actions["Fire"].canceled += OnStopFire;
             
@@ -31,6 +34,8 @@ namespace Galaga.Game.Services.Input.Handlers
         {
             Input.actions["Move"].performed -= OnMoveUpdate;
             Input.actions["Move"].canceled -= OnMoveStop;
+            
+            Input.actions["Look"].performed += OnLookUpdate;
 
             Input.actions["Fire"].performed -= OnStartFire;
             Input.actions["Fire"].canceled -= OnStopFire;
@@ -59,6 +64,11 @@ namespace Galaga.Game.Services.Input.Handlers
         private void OnMoveUpdate(InputAction.CallbackContext obj)
         {
             MovementInput = obj.ReadValue<Vector2>();
+        }
+        
+        private void OnLookUpdate(InputAction.CallbackContext obj)
+        {
+            LookInput = obj.ReadValue<Vector2>();
         }
         
         private void OnMoveStop(InputAction.CallbackContext obj)

@@ -43,6 +43,7 @@ namespace Galaga.Game.Commands.Data
     {
         NONE,
         PLAYER,
+        TARGET,
         AUTO
     }
     

@@ -2,6 +2,8 @@ using System.Threading;
 using Cysharp.Threading.Tasks;
 using Galaga.Game.Commands;
 using Galaga.Game.Model;
+using Galaga.MainMenu.Commands;
+using Game.Services;
 using Zenject;
 
 
@@ -11,6 +13,7 @@ namespace Actions
     {
         [Inject] public SignalBus SignalBus { get; set; }
         [Inject] public UnitsModel UnitsModel { get; set; }
+        [Inject] public TickService TickService { get; set; }
         
         private IActionData[] _actions;
         private int _actionIndex = 0;
@@ -42,7 +45,15 @@ namespace Actions
             if (_isPlaying)
             {
                 _actionIndex++;
-                DoAction(_actions[_actionIndex]);
+                if (_actionIndex >= _actions.Length)
+                {
+                    Stop();
+                    SignalBus.Fire<LevelFinishedSignal>();
+                }
+                else
+                {
+                    DoAction(_actions[_actionIndex]);    
+                }
             }
         }
 
@@ -91,9 +102,10 @@ namespace Actions
             await UniTask.Delay((int)(data.time * 1000),cancellationToken:cancellationToken);
             NextAction();
         }
-        
+
         private async UniTask WaitEnemiesDestroyed(WaitTeamDestroyedActionData data,CancellationToken cancellationToken)
         {
+            
             var team = UnitsModel.Teams.Find(x => x.Id == data.teamId);
             await UniTask.WaitUntil(() => team.Units.Count <= 0,cancellationToken:cancellationToken);
             NextAction();

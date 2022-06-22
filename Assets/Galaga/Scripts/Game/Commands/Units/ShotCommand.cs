@@ -1,6 +1,7 @@
 using Galaga.Common.UI;
 using Galaga.Common.Utils;
 using Galaga.Game.Actors.Bullets;
+using Galaga.Game.Constants;
 using UnityEngine;
 using Zenject;
 
@@ -10,6 +11,7 @@ namespace Galaga.Game.Commands
     public struct ShotSignal
     {
         public string TeamId { get; set; }
+        public float BulletSpeed { get; set; }
         public Vector2 Pos { get; set; }
         public Quaternion Dir { get; set; }
     }
@@ -21,14 +23,14 @@ namespace Galaga.Game.Commands
         [Inject] public DiContainer DiContainer { get; set; }
         public void Execute(ShotSignal signal)
         {
-            var transform = SpawnUtils.Spawn<Transform>("Prefabs/Bullets/Bullet", 
+            var transform = SpawnUtils.Spawn<Transform>(ResourceConstants.Bullet, 
                 signal.Pos,signal.Dir,WorldContainer.transform);
             transform.gameObject.layer = LayerMask.NameToLayer(signal.TeamId);
-            Debug.Log(signal.Dir.eulerAngles);
             var rb = transform.gameObject.GetComponent<Rigidbody2D>();
-            rb.AddForce(signal.Dir.eulerAngles*1, ForceMode2D.Impulse);
+            rb.AddForce(signal.Dir*Vector3.right*signal.BulletSpeed, ForceMode2D.Impulse);
             var bulletCollider = transform.gameObject.AddComponent<BulletCollider>();
             DiContainer.Inject(bulletCollider);
+            GameObject.Destroy(transform.gameObject, 10);
         }
     }
 

@@ -9,6 +9,7 @@ using Galaga.Game.Actors.Units.Parts;
 using Galaga.Game.Actors.Weapons;
 using Galaga.Game.Actors.Weapons.Components;
 using Galaga.Game.Commands.Data;
+using Galaga.Game.Constants;
 using Galaga.Game.Model;
 using Galaga.Game.Services.Input;
 using UnityEngine;
@@ -32,7 +33,6 @@ namespace Galaga.Game.Commands
         
         public void Execute(SpawnUnitSignal signal)
         {
-            if (signal.Data.TeamId == "Team1") return;
             var data = signal.Data;
             
             var transform = AddModel(data);
@@ -63,7 +63,7 @@ namespace Galaga.Game.Commands
 
         private Transform AddModel(SpawnUnitData data)
         {
-            var transform = SpawnUtils.Spawn<Transform>("Prefabs/Units/"+data.SkinId,WorldContainer.Container);
+            var transform = SpawnUtils.Spawn<Transform>(ResourceConstants.PrefabsUnits+data.SkinId,WorldContainer.Container);
             transform.gameObject.layer = LayerMask.NameToLayer(data.TeamId);
             transform.position = data.StartPos.ToVector2();
             return transform;
@@ -82,7 +82,11 @@ namespace Galaga.Game.Commands
                     attack = SpawnUnitUtils.AddAttackByPlayerInput(InputService);
                     break;
                 case AttackType.AUTO:
-                    attack = SpawnUnitUtils.AddAttackForward(transform);
+                    attack = SpawnUnitUtils.AddAttackForward();
+                    break;
+                case AttackType.TARGET:
+                    
+                    attack = SpawnUnitUtils.AddAttackTarget(UnitsModel.GetTeam("Team0").Units[0].Transform);
                     break;
                 default:
                     throw new ArgumentOutOfRangeException();

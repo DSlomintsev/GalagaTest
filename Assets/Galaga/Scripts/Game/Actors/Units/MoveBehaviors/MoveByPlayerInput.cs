@@ -58,8 +58,6 @@ namespace Galaga.Game.Actors.Units.MoveBehaviors
             if (playerPos.y > 4.3f)
                 movementInput.y = Mathf.Min(0, movementInput.y);
 
-            Debug.Log("movementInput="+movementInput);
-            t
             _rigidbody.velocity = movementInput;
         }
     }

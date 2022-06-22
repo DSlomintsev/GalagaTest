@@ -77,11 +77,10 @@ namespace Galaga.Game.Actors.Weapons
             for (var i = 0; i < Config.Pellets; i++)
             {
                 var pos = PositionContainer.Pos;
-                var dir = ShotDir.GetDir();//Rotation * 
-                //Debug.Log(Rotation+";"+);
-                
+                var dir = Rotation * ShotDir.GetDir(); 
+
                 ShotDir.Shot();
-                SignalBus.Fire(new ShotSignal{Pos = pos, Dir= dir, TeamId = TeamId});    
+                SignalBus.Fire(new ShotSignal{Pos = pos, Dir= dir, TeamId = TeamId,BulletSpeed=_config.BulletSpeed});    
             }
 
             _isCooldowned.Value = false;

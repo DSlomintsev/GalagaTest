@@ -43,7 +43,7 @@ namespace Galaga.MainMenu.Services.TopScore
 
         public async void SaveScore()
         {
-            await SaveLoadJsonPlayerPrefs.SaveAsync(ScorePath, Model.Score);
+            await SaveLoadJsonPlayerPrefs.SaveAsync(ScorePath, Model.Score.Value);
         }
 
         public async void LoadScore()

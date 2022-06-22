@@ -3,7 +3,9 @@ using Actions;
 using Galaga.Common.Utils;
 using Galaga.Game.Actors.Units;
 using Galaga.Game.Commands;
+using Galaga.Game.Constants;
 using Galaga.Game.Model;
+using Galaga.MainMenu.Commands;
 using UnityEngine;
 using Zenject;
 
@@ -14,34 +16,53 @@ namespace Galaga.MainMenu.Services.Waves
     {
         [Inject] public DiContainer DiContainer { get; set; }
         [Inject] public UnitsModel UnitsModel { get; set; }
+        [Inject] public GameModel GameModel { get; set; }
         [Inject] public SignalBus SignalBus { get; set; }
+
+        private int _currentLevel;
+        private int _totalLevels;
 
         private ActionController _actionController;
         
         public void Initialize()
         {
+            _totalLevels = Resources.LoadAll<TextAsset>(ResourceConstants.Levels).Length;
         }
 
         public void Dispose()
         {
         }
 
-        public void PlayLevel(string levelId)
+        public void PlayLevel()
         {
-            var levelDataStr = SpawnUtils.Load<TextAsset>("Levels/" + levelId).text;
+            GameModel.Score.Value = 0;
+            var levelDataStr = SpawnUtils.Load<TextAsset>(ResourceConstants.Levels + "Level"+_currentLevel).text;
             var actionData = ActionUtils.JSONToData(levelDataStr);
             _actionController = new ActionController(actionData);
             DiContainer.Inject(_actionController);
             _actionController.Play(0);
         }
+
+        public void LevelFinished()
+        {
+            StopLevel();
+            _currentLevel++;
+            if (_currentLevel >= _totalLevels)
+            {
+                _currentLevel = 0;
+                SignalBus.Fire<GoToMainMenuSignal>();
+            }
+            else
+            {
+                PlayLevel();
+            }
+        }
         
         public void StopLevel()
         {
-            _actionController.Stop();
+            _actionController?.Stop();
             _actionController = null;
-            
-            Debug.Log(UnitsModel.Teams.Count);
-            
+
             foreach (var team in UnitsModel.Teams)
             {
                 while (team.Units.Count>0)

@@ -27,6 +27,7 @@ namespace Galaga.Game.Actors.Weapons
         public int Pellets { get; set; }
         public float CooldownTime { get; set; }
         public float Damage { get; set; }
+        public float BulletSpeed { get; set; }
         public PositionType PositionType { get; set; }
         public DirectionType DirectionType { get; set; }
         public ShotModifier ShotModifier { get; set; }
