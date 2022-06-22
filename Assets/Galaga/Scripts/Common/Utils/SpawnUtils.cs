@@ -12,5 +12,10 @@ namespace Galaga.Common.Utils
         {
             return GameObject.Instantiate(Resources.Load<T>(path),pos,rot,parent);
         }
+        
+        public static T Load<T>(string path) where T : Object
+        {
+            return Resources.Load<T>(path);
+        }
     }
 }

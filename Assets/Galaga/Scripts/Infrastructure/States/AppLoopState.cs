@@ -1,10 +1,10 @@
-
 using Galaga.Common.Services.Dialog;
 using Galaga.Game.Model;
 using Galaga.Game.Services.Input;
+using Galaga.MainMenu.Commands;
 using Galaga.MainMenu.UI.Dialogs.MainMenu;
-using UnityEngine;
 using Zenject;
+
 
 namespace Galaga.Infrastructure.States
 {
@@ -15,19 +15,22 @@ namespace Galaga.Infrastructure.States
         [Inject] public InputService InputService { get; set; }
         [Inject] public SignalBus SignalBus { get; set; }
         [Inject] public DialogService DialogService { get; set; }
+        
+        public int LevelId = 0;
 
         public void Enter()
         {
             GameModel.IsUI.Value = false;
-            InputService.PlayerInputHandler.IsFire.UpdateEvent += OnIsFireUpdate;
             InputService.UIInputHandler.Escape += OnEscapeClick;
             InputService.PlayerInputHandler.Escape += OnEscapeClick;
             DialogService.OpenDialog<GameUIViewModel>();
+
+            SignalBus.Fire(new StartLevelSignal("Level"+LevelId));
         }
         
         public void Exit()
         {
-            InputService.PlayerInputHandler.IsFire.UpdateEvent -= OnIsFireUpdate;
+            SignalBus.Fire(new StopLevelSignal());
             InputService.UIInputHandler.Escape -= OnEscapeClick;
             InputService.PlayerInputHandler.Escape -= OnEscapeClick;
             DialogService.CloseDialog<GameUIViewModel>();
@@ -43,11 +46,6 @@ namespace Galaga.Infrastructure.States
             {
                 DialogService.OpenDialog<GameMenuUIViewModel>();
             }
-        }
-
-        private void OnIsFireUpdate(bool obj)
-        {
-            Debug.Log("OnIsFireUpdate");
         }
     }
 }

@@ -1,6 +1,4 @@
-using Galaga.Infrastructure.Factory;
 using Galaga.Infrastructure.Loading;
-using Galaga.Infrastructure.Services.PersistentProgress;
 using UnityEngine;
 using Zenject;
 
@@ -12,15 +10,12 @@ namespace Galaga.Infrastructure.States
         [Inject] public AppStateMachine AppStateMachine { get; set; }
         [Inject] public SceneLoader SceneLoader { get; set; }
         [Inject] public LoadingSceneAnim LoadingSceneAnim { get; set; }
-        [Inject] public IAppFactory AppFactory { get; set; }
-        [Inject] public IPersistentProgressService PersistentProgressService { get; set; }
         [Inject] public DiContainer DiContainer { get; set; }
 
 
         public void Enter(string sceneName)
         {
             LoadingSceneAnim.Show();
-            AppFactory.CleanUp();
             SceneLoader.Load(sceneName, onLoaded: HandleSceneLoaded);
         }
 

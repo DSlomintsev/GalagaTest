@@ -76,4 +76,5 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   loadingSceneAnimPrefab: {fileID: 4184284134378607321, guid: 920d7bc0c26e348478c18d05f46ebe42, type: 3}
   uiContainerPrefab: {fileID: 1180166354157358147, guid: a46b8ae02227b45eabfdd60f32ab05c3, type: 3}
+  worldContainerPrefab: {fileID: 9201629292855504489, guid: 9bfb950f39bef4cd28d18a9b8fdb7e2c, type: 3}
   inputServicePrefab: {fileID: -5881672378504733527, guid: 1ccaadeddbf6948e486ce9c2c1373452, type: 3}
