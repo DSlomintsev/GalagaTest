@@ -1,3 +1,4 @@
+using Galaga.Common.Services.SoundPlayer;
 using Galaga.Common.UI;
 using Galaga.Common.Utils;
 using Galaga.Game.Actors.Units;
@@ -18,6 +19,7 @@ namespace Galaga.Game.Commands
         [Inject] public UnitsModel UnitsModel { get; set; }
         [Inject] public GameModel GameModel { get; set; }
         [Inject] public WorldContainer WorldContainer { get; set; }
+        [Inject] public SoundService SoundService { get; set; }
 
         public void Execute(DestroyUnitSignal signal)
         {
@@ -29,6 +31,7 @@ namespace Galaga.Game.Commands
                 {
                     GameModel.Score.Value += 1;
                 }
+                SoundService.PlaySound(SoundConstants.Explode);
                 var hitEffect = SpawnUtils.Spawn<ParticleSystem>(ResourceConstants.ExplosionPrefab,
                     unit.Transform.position,unit.Transform.rotation, WorldContainer.Container);
                 GameObject.Destroy(hitEffect,3);

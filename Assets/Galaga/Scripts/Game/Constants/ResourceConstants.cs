@@ -11,5 +11,6 @@ namespace Galaga.Game.Constants
         public static string Bullet = $"{Prefabs}Bullets/Bullet";
         
         public static string Levels = $"Levels/";
+        public static string Sounds = $"Sounds/";
     }
 }

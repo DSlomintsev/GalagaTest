@@ -40,6 +40,15 @@
                     "processors": "",
                     "interactions": "",
                     "initialStateCheck": false
+                },
+                {
+                    "name": "MobileLook",
+                    "type": "Value",
+                    "id": "fa0485d4-1cf3-47b5-afd9-a3450579d9c9",
+                    "expectedControlType": "Vector2",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": true
                 }
             ],
             "bindings": [
@@ -133,6 +142,17 @@
                 },
                 {
                     "name": "",
+                    "id": "4b879ade-5d82-48ad-b6bf-268fef912053",
+                    "path": "<Touchscreen>/touch*/Press",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "Fire",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
                     "id": "41d18568-2b06-40de-9d6e-4b4136338f9e",
                     "path": "<Keyboard>/escape",
                     "interactions": "",
@@ -150,6 +170,17 @@
                     "processors": "",
                     "groups": "",
                     "action": "Look",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "3c1d2381-0ddc-44cf-9233-0e3b3ad9ca28",
+                    "path": "<Gamepad>/rightStick",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "MobileLook",
                     "isComposite": false,
                     "isPartOfComposite": false
                 }

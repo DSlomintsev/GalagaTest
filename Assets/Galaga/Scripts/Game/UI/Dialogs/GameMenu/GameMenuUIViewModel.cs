@@ -18,11 +18,6 @@ namespace Galaga.MainMenu.UI.Dialogs.MainMenu
         {
         }
 
-        public void OnScore()
-        {
-            DialogService.OpenDialog<SaveScoreDialogViewModel>();
-        }
-
         public void OnContinueGame()
         {
             DialogService.CloseDialog<GameMenuUIViewModel>();

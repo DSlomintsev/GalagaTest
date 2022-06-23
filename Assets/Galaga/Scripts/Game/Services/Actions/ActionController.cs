@@ -105,7 +105,6 @@ namespace Actions
 
         private async UniTask WaitEnemiesDestroyed(WaitTeamDestroyedActionData data,CancellationToken cancellationToken)
         {
-            
             var team = UnitsModel.Teams.Find(x => x.Id == data.teamId);
             await UniTask.WaitUntil(() => team.Units.Count <= 0,cancellationToken:cancellationToken);
             NextAction();

@@ -1,3 +1,4 @@
+using Galaga.Common.Services.SoundPlayer;
 using Galaga.Common.UI;
 using Galaga.Common.Utils;
 using Galaga.Game.Actors.Bullets;
@@ -19,12 +20,14 @@ namespace Galaga.Game.Commands
     {
         [Inject] public SignalBus SignalBus { get; set; }
         [Inject] public UnitsModel UnitsModel { get; set; }
+        [Inject] public SoundService SoundService { get; set; }
         [Inject] public WorldContainer WorldContainer { get; set; }
         
         public void Execute(HitUnitSignal signal)
         {
             var bullet = signal.BulletCollider.transform;
             
+            SoundService.PlaySound(SoundConstants.Hit);
             var hitEffect = SpawnUtils.Spawn<ParticleSystem>(ResourceConstants.HitPrefab,
                 bullet.position,bullet.rotation, WorldContainer.Container);
             GameObject.Destroy(hitEffect,3);

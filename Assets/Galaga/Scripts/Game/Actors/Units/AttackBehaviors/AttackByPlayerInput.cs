@@ -61,15 +61,24 @@ namespace Galaga.Game.Actors.Units.AttackBehaviors
 
         private void TickAction()
         {
-            var target = _camera.ScreenToWorldPoint(_playerInputHandler.LookInput);
-            var sourcePos=_weapon.PositionContainer.Pos;
+            var angle = 0f;
+            if (Application.isMobilePlatform)
+            {
+                angle = Mathf.Atan2(_playerInputHandler.MobileLookInput.y,_playerInputHandler.MobileLookInput.x);
+                angle = angle*Mathf.Rad2Deg;
+            }
+            else
+            {
+                var target = _camera.ScreenToWorldPoint(_playerInputHandler.LookInput);
+                var sourcePos=_weapon.PositionContainer.Pos;
             
-            var dir = new Vector2(target.x, target.y) - sourcePos;
+                var dir = new Vector2(target.x, target.y) - sourcePos;
             
-            var angle = Vector3.Angle(Vector3.right, dir);
-            if(target.y < sourcePos.y) angle *= -1;
-
-            _weapon.Rotation =  Quaternion.AngleAxis(angle, Vector3.forward);
+                angle = Vector3.Angle(Vector3.right, dir);
+                if(target.y < sourcePos.y) angle *= -1;
+            }
+            
+            _weapon.Rotation = Quaternion.AngleAxis(angle, Vector3.forward);
         }
     }
 }

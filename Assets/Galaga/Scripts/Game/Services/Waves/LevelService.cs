@@ -1,7 +1,8 @@
 using System;
+using System.Threading;
 using Actions;
+using Cysharp.Threading.Tasks;
 using Galaga.Common.Utils;
-using Galaga.Game.Actors.Units;
 using Galaga.Game.Commands;
 using Galaga.Game.Constants;
 using Galaga.Game.Model;
@@ -33,14 +34,27 @@ namespace Galaga.MainMenu.Services.Waves
         {
         }
 
+        private CancellationTokenSource _cts;
+
         public void PlayLevel()
         {
             GameModel.Score.Value = 0;
+            _cts = new CancellationTokenSource();
             var levelDataStr = SpawnUtils.Load<TextAsset>(ResourceConstants.Levels + "Level"+_currentLevel).text;
             var actionData = ActionUtils.JSONToData(levelDataStr);
             _actionController = new ActionController(actionData);
             DiContainer.Inject(_actionController);
             _actionController.Play(0);
+
+            WaitTeamDestroy("Team0", _cts.Token);
+        }
+
+        private async UniTask WaitTeamDestroy(string teamId, CancellationToken cancellationToken)
+        {
+            var team = UnitsModel.Teams.Find(x => x.Id == teamId);
+            await UniTask.WaitUntil(() => team.Units.Count <= 0,cancellationToken:cancellationToken);
+            StopLevel();
+            SignalBus.Fire<LevelLoseSignal>();
         }
 
         public void LevelFinished()
@@ -60,6 +74,8 @@ namespace Galaga.MainMenu.Services.Waves
         
         public void StopLevel()
         {
+            _cts?.Dispose();
+            _cts = null;
             _actionController?.Stop();
             _actionController = null;
 

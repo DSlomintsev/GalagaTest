@@ -8,7 +8,6 @@ namespace Galaga.MainMenu.UI.Dialogs.MainMenu
     {
         [SerializeField] private Button continueGameBtn;
         [SerializeField] private Button quitGameBtn;
-        [SerializeField] private Button score;
 
         private GameMenuUIViewModel _viewModel;
         public override BaseDialogViewModel ViewModel
@@ -24,18 +23,12 @@ namespace Galaga.MainMenu.UI.Dialogs.MainMenu
         {
             continueGameBtn.onClick.AddListener(OnPlayGameBtnClick);
             quitGameBtn.onClick.AddListener(OnQuitGameBtnClick);
-            score.onClick.AddListener(OnScore);
         }
         
         protected override void DeInit()
         {
             continueGameBtn.onClick.RemoveListener(OnPlayGameBtnClick);
             quitGameBtn.onClick.RemoveListener(OnQuitGameBtnClick);
-        }
-
-        private void OnScore()
-        {
-            _viewModel.OnScore();
         }
 
         private void OnPlayGameBtnClick()

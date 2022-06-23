@@ -1,3 +1,4 @@
+using Galaga.Common.Services.SoundPlayer;
 using Galaga.Common.UI;
 using Galaga.Common.Utils;
 using Galaga.Game.Actors.Bullets;
@@ -20,11 +21,13 @@ namespace Galaga.Game.Commands
     {
         [Inject] public WorldContainer WorldContainer { get; set; }
         [Inject] public SignalBus SignalBus { get; set; }
+        [Inject] public SoundService SoundService { get; set; }
         [Inject] public DiContainer DiContainer { get; set; }
         public void Execute(ShotSignal signal)
         {
             var transform = SpawnUtils.Spawn<Transform>(ResourceConstants.Bullet, 
                 signal.Pos,signal.Dir,WorldContainer.transform);
+            SoundService.PlaySound(SoundConstants.Shot);
             transform.gameObject.layer = LayerMask.NameToLayer(signal.TeamId);
             var rb = transform.gameObject.GetComponent<Rigidbody2D>();
             rb.AddForce(signal.Dir*Vector3.right*signal.BulletSpeed, ForceMode2D.Impulse);
